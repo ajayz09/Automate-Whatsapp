@@ -63,11 +63,11 @@ def forwardMessageToMuliple():
         choice=input("Press 1 to exit, press any other key to continue adding list ")
     print("Contacts name are : ")
 
-    def list_print():
+    def printListofNames():
             for x in range(iol):
                 print("    %d - %s"%(x+1,namelist[x]))
 
-    def ex_forwarder():
+    def editForwardList():
         print("""
                      1. Add more contact
                      2. Delete some contacts
@@ -76,31 +76,36 @@ def forwardMessageToMuliple():
         if choice=="1":
             receipentName=input("Enter the name of person: ")
             namelist.append(receipentName)
+
         elif choice=="2":
             print("Current List is: ")
-            list_print()
+            printListofNames()
             receipentNameToRemove=input("Enter the Name of the person to remove!! please be accurate")
             kr=0
+
             for y in range(iol):
                 if namelist[y]==receipentNameToRemove:
                     namelist.remove(receipentNameToRemove)
                     kr=1
+
             if kr==0:
-                print("NO such contact found recalling")
-                ex_forwarder()
+                print("No such contact found recalling")
+                editForwardList()
             else:
-                execute_forwarder()
+                sendMessageToForwardList()
+
         elif choice=="3":
-            execute_forwarder()
+            sendMessageToForwardList()
+
         else:
             print("Wrong choice...")
-            ex_forwarder()
+            editForwardList()
 
-    def execute_forwarder():
+    def sendMessageToForwardList():
         izr_text=input("Enter the message")
         for xoz in range(iol):
-            use_this=namelist[xoz]
-            opener=driver.find_element_by_xpath('//span[text()="%s"]'%(use_this))
+            name=namelist[xoz]
+            opener=driver.find_element_by_xpath('//span[text()="%s"]'%(name))
             opener.click()
             lane_rn=driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
 
@@ -111,8 +116,8 @@ def forwardMessageToMuliple():
                 print("Error in forwarding to multiple people")
                 main()
         main()
-    list_print()
-    ex_forwarder()
+    printListofNames()
+    editForwardList()
 
 def sendMessage():
     try:
